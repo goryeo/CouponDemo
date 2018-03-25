@@ -27,14 +27,14 @@ public class CouponController {
         return objmv;
     }
 	
-    //게시글 작성 페이지(GET)    
+    //쿠폰 생성 페이지(GET)    
     @RequestMapping(value="/post",method=RequestMethod.GET)
     public ModelAndView insertForm() throws Exception{
     	ModelAndView objmv = new ModelAndView("couponInsert");
         return objmv;
     }
     
-    //게시글 작성(POST)
+    //쿠폰 생성(POST)
     @RequestMapping(value="/post",method=RequestMethod.POST)
     public String insert(@ModelAttribute("CouponVO") CouponVO coupon) throws Exception{
  
