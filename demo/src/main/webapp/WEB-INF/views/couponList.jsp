@@ -22,7 +22,14 @@
             <th>Coupon</th>
             <th>Datetime</th>
         </tr>
-${list}
+        <c:forEach var="l" items="${list}">
+        <tr>
+            <td>${l.couponID}</td>
+            <td>${l.emailAddr}</td>
+            <td>${l.couponNo}</td>
+            <td>${l.regdate}</td>
+        </tr>
+        </c:forEach>
     </table> 
 <%@ include file="bootstrap.jsp" %>
 </body>

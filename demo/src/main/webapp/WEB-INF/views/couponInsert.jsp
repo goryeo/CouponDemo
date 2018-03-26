@@ -15,7 +15,7 @@
     <form action="/list/post" method="post">
       <div class="form-group">
         <label for="email">쿠폰생성</label>
-        <input type="text" class="form-control" id="email" name="EmailAddr" placeholder="이메일을 입력하세요.">
+        <input type="text" class="form-control" id="email" name="emailAddr" placeholder="이메일을 입력하세요.">
       </div>
       <button type="submit" class="btn btn-primary">생성</button>
     </form>

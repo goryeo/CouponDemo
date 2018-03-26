@@ -21,8 +21,8 @@ public class CouponServiceImpl implements CouponService {
 
 	@Override
 	public void couponInsert(CouponVO coupon) throws Exception {
-	    String EmailAddr = coupon.getEmailAddr();
-	    coupon.setEmailAddr(EmailAddr);
+	    String emailAddr = coupon.getEmailAddr();
+	    coupon.setEmailAddr(emailAddr);
 	    couponDao.couponInsert(coupon);
 	}
 
