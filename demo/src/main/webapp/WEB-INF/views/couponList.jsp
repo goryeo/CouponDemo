@@ -11,7 +11,19 @@
 <title>쿠폰 목록</title>
 </head>
 <body>
+    <h3>쿠폰 목록</h3>
+    <button class="btn btn-primary" style="float : left;" onclick="location.href='/list/post'">쿠폰생성</button>
+    <br>
+    <br>
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Email</th>
+            <th>Coupon</th>
+            <th>Datetime</th>
+        </tr>
 ${list}
+    </table> 
 <%@ include file="bootstrap.jsp" %>
 </body>
 </html>

@@ -3,7 +3,12 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
  
-<mapper namespace="com.coupon.mapper.CouponMapper">
+<mapper namespace="com.coupon.dao.CouponDAO">
+    
+    <select id="couponCount" resultType="int">
+        SELECT COUNT(*)
+        FROM tcouponmst
+    </select>
     
     <insert id="couponInsert" parameterType="com.coupon.domain.CouponVO">
         INSERT INTO tcouponmst (CouponID, CouponNo, EmailAddr, PubYMD, UseStateCode)

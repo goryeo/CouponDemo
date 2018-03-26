@@ -11,8 +11,10 @@
 <title>쿠폰 목록</title>
 </head>
 <body>
-    <h3>쿠폰 목록 목록</h3>
-    <button class="btn btn-primary" style="float : right;" onclick="location.href='/board/post'">작성</button>
+    <h3>쿠폰 목록</h3>
+    <button class="btn btn-primary" style="float : left;" onclick="location.href='/list/post'">쿠폰생성</button>
+    <br>
+    <br>
     <table class="table">
         <tr>
             <th>ID</th>
