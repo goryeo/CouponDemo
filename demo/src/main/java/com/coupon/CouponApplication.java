@@ -13,24 +13,25 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 @SpringBootApplication
-@MapperScan(value={"com.coupon.dao"})
+@MapperScan(value = {"com.coupon.dao"})
 public class CouponApplication {
- 
+
     public static void main(String[] args) {
         SpringApplication.run(CouponApplication.class, args);
     }
-    
+
     @Bean
-    public SqlSessionFactory sqlSessionFactory(DataSource dataSource)throws Exception{
+    public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
         SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
-            sessionFactory.setDataSource(dataSource);
-            Resource[] res = new PathMatchingResourcePatternResolver().getResources("classpath:mapper/*.xml");
-            sessionFactory.setMapperLocations(res);
-            return sessionFactory.getObject();
+        sessionFactory.setDataSource(dataSource);
+        Resource[] res = new PathMatchingResourcePatternResolver().getResources("classpath:mapper/*.xml");
+        sessionFactory.setMapperLocations(res);
+        return sessionFactory.getObject();
     }
+
     @Bean
     public SqlSessionTemplate sqlSession(SqlSessionFactory factory) {
-    	return new SqlSessionTemplate(factory);
+        return new SqlSessionTemplate(factory);
     }
- 
+
 }
