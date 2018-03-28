@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import com.coupon.service.CouponService;
 import com.coupon.util.TotalPage;;
@@ -65,13 +67,12 @@ public class CouponController {
     //2. 쿠폰 생성
     @RequestMapping(value="/coupon/create", method=RequestMethod.POST)
     @ResponseBody
-    public Object couponCreate(@RequestParam Map<String, Object> paramMap) {
+    public ModelAndView couponCreate(@RequestParam Map<String, Object> paramMap) {
         
         //정보입력
         int intResult = 0;
         
-        //리턴값
-        Map<String, Object> retVal = new HashMap<String, Object>();
+        ModelAndView  objMV = new ModelAndView(new MappingJackson2JsonView());
 
         try 
         {
@@ -84,16 +85,16 @@ public class CouponController {
         finally
         {
             if(intResult > 0){
-                retVal.put("code", "OK");
-                retVal.put("message", "쿠폰생성 성공.");
+                objMV.addObject("code", "OK");
+                objMV.addObject("message", "쿠폰생성 성공.");
             }
             else{
-                retVal.put("code", "FAIL");
-                retVal.put("message", "쿠폰생성 실패.");
+                objMV.addObject("code", "FAIL");
+                objMV.addObject("message", "쿠폰생성 실패.");
             }    
         }
         
-        return retVal;
+        return objMV;
         
     }
 }

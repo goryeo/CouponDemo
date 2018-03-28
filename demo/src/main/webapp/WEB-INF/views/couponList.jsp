@@ -35,9 +35,9 @@ $(document).ready(function() {
         //쿠폰 생성
         $.ajax({
             url         : "/coupon/create",
+            method      : "post",
             dataType    : "json",
-            contentType : "application/x-www-form-urlencoded; charset=UTF-8",
-            type        : "post",
+            contentType : "application/json",
             data        : objParams,
             success     : function(retVal){
                 if(retVal.code == "OK") {
@@ -123,7 +123,7 @@ $(document).ready(function() {
 <script src="/resources/bootstrap/js/jquery.twbsPagination.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-    
+
     var firstPageClick = true;
     var totalPages     = ${totalPage};    //전체 페이지
     var pageSize       = 10;              //리스트 개수

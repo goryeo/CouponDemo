@@ -20,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <!-- 쿠폰 생성 -->
     <insert id="insCoupon" parameterType="java.util.HashMap">
-        insert into tcouponmst (couponid, couponno, emailaddr, pubymd, usestatecode)
-                         values(37, 'aijsdifjia', #{email}, 20180325, 1) 
+        insert into tcouponmst (couponno, emailaddr, pubymd, usestatecode)
+                         values('s5sad4', #{email}, '20180329', 1) 
     </insert>
 </mapper>
