@@ -23,56 +23,56 @@ public class CouponController {
     @Autowired
     private TotalPage totalPage;
     
-    //쿠폰 리스트 조회
+    //1. 쿠폰 리스트 조회
     @RequestMapping(value = "/coupon/list", method = RequestMethod.GET)
-    public String couponList(@RequestParam Map<String, Object> paramMap, Model model) throws Exception {
+    public String couponList(@RequestParam Map<String, Object> paramMap, Model model) {
+        
+        int pageNo         = 1;
+        int pageSize       = 10;
+        int totalCnt       = 0;
+        String strPageNo   = (String) paramMap.get("pageNo");
+        String strPageSize = (String) paramMap.get("pageSize");
 
-        //null처리 및 기본값 셋팅 및 초기화
-        String strStartPage = (String) paramMap.get("startPage");
-        String strVisiblePages = (String) paramMap.get("visiblePages");
- 
-        int startPage = 1;
-        int visiblePages = 10;
- 
-        if(strStartPage != null && !strStartPage.equals("")){
-            startPage = Integer.parseInt(strStartPage);
-        }
-        if(strVisiblePages != null && !strVisiblePages.equals("")){
-            visiblePages = Integer.parseInt(strVisiblePages);
-        }
- 
-        model.addAttribute("startPage", startPage);//현재 페이지
-        model.addAttribute("totalPage", 1);//전체 게시물
- 
-        //처음 호출이 아니라면
-        if(paramMap.get("init") != null){
- 
-            Map<String, Object> searchMap = new HashMap<String, Object>();
+        try 
+        {
+            if(strPageNo != null && !strPageNo.equals("")){
+                pageNo = Integer.parseInt(strPageNo);
+            }
+            if(strPageSize != null && !strPageSize.equals("")){
+                pageSize = Integer.parseInt(strPageSize);
+            }
 
-            //전체 게시물수 가져오기
-            int totalCnt = couponService.getCouponCnt();
- 
-            model.addAttribute("init","N");
-            model.addAttribute("totalCnt", totalCnt);//전체 게시물
-            model.addAttribute("totalPage", totalPage.getTotalPage(totalCnt, visiblePages));//전체 페이지
-            model.addAttribute("couponList", couponService.getCouponList(searchMap, startPage,  visiblePages));//검색
- 
+            totalCnt = couponService.getCouponCnt();
+
+            //현재 페이지
+            model.addAttribute("pageNo", pageNo);
+            //전체 개수
+            model.addAttribute("totalCnt", totalCnt);
+            //전체 페이지
+            model.addAttribute("totalPage", totalPage.getTotalPage(totalCnt, pageSize));
+            //쿠폰 리스트 호출
+            model.addAttribute("couponList", couponService.getCouponList(pageNo, pageSize));
+        }
+        catch (Exception objEx) 
+        { 
+            objEx.printStackTrace();
         }
 
         return "couponList";
         
     }
 
-    //AJAX 호출 (쿠폰생성 등록)
+    //2. 쿠폰 생성
     @RequestMapping(value="/coupon/create", method=RequestMethod.POST)
     @ResponseBody
     public Object couponCreate(@RequestParam Map<String, Object> paramMap) {
-
+        
+        //정보입력
+        int intResult = 0;
+        
         //리턴값
         Map<String, Object> retVal = new HashMap<String, Object>();
 
-        //정보입력
-        int intResult = 0;
         try 
         {
             intResult = couponService.insCoupon(paramMap);
@@ -83,7 +83,6 @@ public class CouponController {
         }
         finally
         {
-            
             if(intResult > 0){
                 retVal.put("code", "OK");
                 retVal.put("message", "쿠폰생성 성공.");

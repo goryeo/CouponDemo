@@ -42,10 +42,10 @@
 		</dependency>
 		<!-- JSP -->
         <dependency>
-   <groupId>org.apache.tomcat.embed</groupId>
-   <artifactId>tomcat-embed-jasper</artifactId>
-   <scope>provided</scope>
-</dependency>
+		   <groupId>org.apache.tomcat.embed</groupId>
+		   <artifactId>tomcat-embed-jasper</artifactId>
+		   <scope>provided</scope>
+		</dependency>
                 
         <dependency>
             <groupId>javax.servlet.jsp.jstl</groupId>
@@ -102,6 +102,12 @@
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
             <version>1</version>
+        </dependency>
+        <!-- Jackson JSON Mapper -->
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.9.13</version>
         </dependency>
 	</dependencies>
 

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.coupon.dao.CouponDao;
-import com.coupon.domain.CouponVO;
+import com.coupon.domain.ResCouponList;
 import com.coupon.util.PageableUtil;
 
 @Service
@@ -25,14 +25,15 @@ public class CouponServiceImpl implements CouponService {
     }
 
     @Override
-    public List<CouponVO> getCouponList(Map<String, Object> paramMap, int startPage, int visiblePages) throws Exception {
+    public List<ResCouponList> getCouponList(int pageNo, int pageSize) throws Exception {
+        
         //페이징을 위한 limit 조건을 추가
-        Map<String, Object> tmpSearchMap = pageableUtil.getRowBounds(startPage, visiblePages);
+        Map<String, Object> tmpMap = pageableUtil.getRowBounds(pageNo, pageSize);
  
-        paramMap.put("start", tmpSearchMap.get("start"));
-        paramMap.put("end",   tmpSearchMap.get("end"));
+        tmpMap.put("start", tmpMap.get("start"));
+        tmpMap.put("end",   tmpMap.get("end"));
 
-        return couponDao.getCouponList(paramMap);
+        return couponDao.getCouponList(tmpMap);
     }
 
     @Override

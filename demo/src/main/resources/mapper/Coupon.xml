@@ -11,9 +11,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     
     <!-- 쿠폰 리스트 조회 -->
-    <select id="getCouponList" resultType="com.coupon.domain.CouponVO" parameterType="java.util.HashMap">
+    <select id="getCouponList" resultType="com.coupon.domain.ResCouponList" parameterType="java.util.HashMap">
         select couponid, emailaddr, couponno, regdate
-        from tcouponmst
+        from   tcouponmst
         order by regdate desc
         limit #{start}, #{end}
     </select>
@@ -21,6 +21,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <!-- 쿠폰 생성 -->
     <insert id="insCoupon" parameterType="java.util.HashMap">
         insert into tcouponmst (couponid, couponno, emailaddr, pubymd, usestatecode)
-                         values(1, 1234123412341237, #{emailAddr}, 20180325, 1) 
+                         values(37, 'aijsdifjia', #{email}, 20180325, 1) 
     </insert>
 </mapper>
