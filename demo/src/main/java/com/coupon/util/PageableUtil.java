@@ -19,12 +19,12 @@ public class PageableUtil {
             pageNo = (pageNo - 1) * pageSize;
         }
         
-        Map<String, Object> pageable = new HashMap<String, Object>();
+        Map<String, Object> objPageable = new HashMap<String, Object>();
          
-        pageable.put("start", pageNo);
-        pageable.put("end",   pageSize);
+        objPageable.put("pageno",   pageNo);
+        objPageable.put("pagesize", pageSize);
          
-        return pageable;
+        return objPageable;
     }
  
 }

@@ -20,27 +20,37 @@
 $(document).ready(function() {
 
     $("#create").click(function(){
-                 
+        
+    	var strEmailAddr = $("#email").val();
+    	var strRegExp = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    	
         //유효성 검사
-        if($("#email").val().trim() == ""){
-            alert("이메일을 해주세요.");
+        if(strEmailAddr.trim() == ""){
+            alert("이메일을 입력해주세요.");
             $("#email").focus();
             return false;
         }
-
-        var objParams = {
-            email : $("#email").val(),
-        };
-         
+        
+        if (!strRegExp.test(strEmailAddr)) {
+            alert("이메일 주소가 유효하지 않습니다.");
+            $("#email").focus();
+            return false;
+        }
+        
+        var objParams = new Object();
+            objParams.strEmailAddr = strEmailAddr;
+            
+        var jsonData = JSON.stringify(objParams);
+        
         //쿠폰 생성
         $.ajax({
             url         : "/coupon/create",
-            method      : "post",
-            dataType    : "json",
+            type        : "post",
             contentType : "application/json",
-            data        : objParams,
+            dataType    : "json",
+            data        : jsonData,
             success     : function(retVal){
-                if(retVal.code == "OK") {
+                if(retVal.code == 0) {
                     alert(retVal.message);
                     location.href = "/coupon/list";  
                 } else {
@@ -48,7 +58,7 @@ $(document).ready(function() {
                 }
             },
             error : function(request, status, error){
-                console.log("AJAX_ERROR");
+            	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
             }
         });
     });
@@ -70,7 +80,7 @@ $(document).ready(function() {
     </div>
     <br>
     <div class="col-md-12" style="text-align:left">
-        <input type="text" id="email" name="email" style="width:300px;" placeholder="example@domain.com" value=""/>
+        <input type="text" id="email" name="email" style="width:300px;" placeholder="example@domain.com" maxlength="200" value=""/>
     </div>
     <br>
     <div class="col-md-12" style="text-align:left">
@@ -81,6 +91,10 @@ $(document).ready(function() {
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
+            <!-- Default panel contents -->
+                <div class="panel-heading"><span class="glyphicon glyphicon-list"></span> 
+                Results
+                </div>
             <!-- Table -->
             <div class="table-responsive">
                 <table class="table table-bordered table-hover specialCollapse">
@@ -102,10 +116,10 @@ $(document).ready(function() {
                         <c:otherwise>
                             <c:forEach var="row" items="${couponList}" varStatus="status">
                                 <tr>
-                                    <td align="center">${row.couponid}</td>
-                                    <td align="center">${row.emailaddr}</td>
-                                    <td align="center">${row.couponno}</td>
-                                    <td align="center"><fmt:formatDate value="${row.regdate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                                    <td align="center">${row.strCouponID}</td>
+                                    <td align="center">${row.strEmailAddr}</td>
+                                    <td align="center">${row.strCouponNo}</td>
+                                    <td align="center"><fmt:formatDate value="${row.strRegDate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
                                 </tr>
                             </c:forEach>
                         </c:otherwise>

@@ -23,7 +23,7 @@ public class CouponApplication {
     @Bean
     public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
         SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
-        sessionFactory.setDataSource(dataSource);
+        sessionFactory.setDataSource(dataSource); //데이터소스 설정
         Resource[] res = new PathMatchingResourcePatternResolver().getResources("classpath:mapper/*.xml");
         sessionFactory.setMapperLocations(res);
         return sessionFactory.getObject();

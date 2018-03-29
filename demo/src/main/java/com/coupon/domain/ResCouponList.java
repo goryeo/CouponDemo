@@ -6,8 +6,8 @@ import lombok.Data;
 
 @Data
 public class ResCouponList {
-    private int    couponid;
-    private String emailaddr;
-    private String couponno;
-    private Date   regdate;
+    private int    strCouponID;
+    private String strEmailAddr;
+    private String strCouponNo;
+    private Date   strRegDate;
 }
