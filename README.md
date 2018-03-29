@@ -93,20 +93,35 @@
 ### 4. 쿠폰 테이블 스키마
 
 CREATE TABLE TCouponMst (
+
 CouponID int(11) NOT NULL AUTO_INCREMENT,
+
 CouponNo varchar(100) NOT NULL,
+
 EmailAddr varchar(200) NOT NULL,
+
 PubYMD char(8) NOT NULL,
+
 UseYMD char(8) DEFAULT NULL,
+
 UseStateCode tinyint(4) NOT NULL,
+
 RegDate timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
 UpdDate datetime DEFAULT NULL,
+
 PRIMARY KEY (CouponID),
+
 UNIQUE KEY SeqNo_UNIQUE (CouponID),
+
 UNIQUE KEY CouponNo_UNIQUE (CouponNo),
+
 UNIQUE KEY EmailAddr_UNIQUE (EmailAddr),
+
 KEY PubYMD (PubYMD),
+
 KEY EmailAddr (EmailAddr)
+
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COMMENT='쿠폰 마스터 테이블';
 
 ### 5. 테스트 케이스
