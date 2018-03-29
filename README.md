@@ -90,7 +90,26 @@
   >
   > 원활한 디버깅을 위해 Fiddler 4, Postman 활용
 
-### 4. 테스트 케이스
+### 4. 쿠폰 테이블 스키마
+
+CREATE TABLE TCouponMst (
+CouponID int(11) NOT NULL AUTO_INCREMENT,
+CouponNo varchar(100) NOT NULL,
+EmailAddr varchar(200) NOT NULL,
+PubYMD char(8) NOT NULL,
+UseYMD char(8) DEFAULT NULL,
+UseStateCode tinyint(4) NOT NULL,
+RegDate timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+UpdDate datetime DEFAULT NULL,
+PRIMARY KEY (CouponID),
+UNIQUE KEY SeqNo_UNIQUE (CouponID),
+UNIQUE KEY CouponNo_UNIQUE (CouponNo),
+UNIQUE KEY EmailAddr_UNIQUE (EmailAddr),
+KEY PubYMD (PubYMD),
+KEY EmailAddr (EmailAddr)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COMMENT='쿠폰 마스터 테이블';
+
+### 5. 테스트 케이스
 
 | 쿠폰 데모 테스트                                             |
 | ------------------------------------------------------------ |
@@ -105,7 +124,7 @@
 | 9. 생성된 쿠폰은  16자리 정규식[0-9a-zA-Z]을 만족하는가?     |
 | 10. 생성된 쿠폰은  리스트에 정상적으로 노출되는가?           |
 
-### 5. 느낀점
+### 6. 느낀점
 
 - 처음 사용하는 자바 스프링부트이기에 초기 구성 및 시작하는데 많은 고난이 있었습니다. 과연 단기간에 만들 수 있을까라는 생각도 했지만 포기하지 않고 끝까지해보겠다는 도전정신으로 프로젝트를 완성 할 수 있었습니다. 아쉬운점은 쿠폰 생성은 json을 이용한 비동기로 처리하였지만 리스트는 변경하지 못한점입니다. 
 
