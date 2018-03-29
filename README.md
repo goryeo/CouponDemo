@@ -21,10 +21,12 @@
 ### 2. 프로젝트 실행 방법
 
 - 구현환경 설정 후 아래 Git 주소에서 프로젝트 다운로드
+- 아래에 있는 테이블 스키마 MySQL에 추가
 - `https://github.com/goryeo/CouponDemo`
 - STS - File - Import - General - Existing Projects into Workspace
 - 다운 받은 프로젝트 폴더 선택 Finish
 - Run As - Spring Boot App 으로 빌드
+- URL 호출 : `http://localhost:8080/coupon/list`
 
 ### 3. 문제 해결 전략
 
@@ -92,37 +94,37 @@
 
 ### 4. 쿠폰 테이블 스키마
 
-CREATE TABLE TCouponMst (
+*CREATE TABLE TCouponMst (*
 
-CouponID int(11) NOT NULL AUTO_INCREMENT,
+*CouponID int(11) NOT NULL AUTO_INCREMENT,*
 
-CouponNo varchar(100) NOT NULL,
+*CouponNo varchar(100) NOT NULL,*
 
-EmailAddr varchar(200) NOT NULL,
+*EmailAddr varchar(200) NOT NULL,*
 
-PubYMD char(8) NOT NULL,
+*PubYMD char(8) NOT NULL,*
 
-UseYMD char(8) DEFAULT NULL,
+*UseYMD char(8) DEFAULT NULL,*
 
-UseStateCode tinyint(4) NOT NULL,
+*UseStateCode tinyint(4) NOT NULL,*
 
-RegDate timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+*RegDate timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,*
 
-UpdDate datetime DEFAULT NULL,
+*UpdDate datetime DEFAULT NULL,*
 
-PRIMARY KEY (CouponID),
+*PRIMARY KEY (CouponID),*
 
-UNIQUE KEY SeqNo_UNIQUE (CouponID),
+*UNIQUE KEY SeqNo_UNIQUE (CouponID),*
 
-UNIQUE KEY CouponNo_UNIQUE (CouponNo),
+*UNIQUE KEY CouponNo_UNIQUE (CouponNo),*
 
-UNIQUE KEY EmailAddr_UNIQUE (EmailAddr),
+*UNIQUE KEY EmailAddr_UNIQUE (EmailAddr),*
 
-KEY PubYMD (PubYMD),
+*KEY PubYMD (PubYMD),*
 
-KEY EmailAddr (EmailAddr)
+*KEY EmailAddr (EmailAddr)*
 
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COMMENT='쿠폰 마스터 테이블';
+*) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COMMENT='쿠폰 마스터 테이블';*
 
 ### 5. 테스트 케이스
 
