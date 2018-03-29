@@ -74,21 +74,24 @@ public class CouponController {
                                     ,HttpServletResponse objResponse
                                     ,@RequestBody Map<String, Object> paramMap) {
         
-        int    intResult   = 0;
-        String strErrMsg   = "쿠폰생성에 성공하였습니다.";
-        String strCouponNo = null;
+        int    intResult    = 0;
+        String strErrMsg    = "쿠폰생성에 성공하였습니다.";
+        String strEmailAddr = null;
+        String strCouponNo  = null;
         
         //JSON 응답 객체
         ModelAndView  objMV = new ModelAndView(new MappingJackson2JsonView());
 
         try 
         {         
+            //이메일 정보 설정
+            strEmailAddr = paramMap.get("strEmailAddr").toString();
             //쿠폰 번호 생성
             strCouponNo = objCouponService.getCouponNo();
             strCouponNo = strCouponNo.substring(0, 4) + "-" + strCouponNo.substring(4, 8) + "-" + strCouponNo.substring(8, 12) + "-" + strCouponNo.substring(12, 16);
             
             //입력받은 이메일과 생성한 쿠폰 정보 추가
-            paramMap.put("strEmailAddr", paramMap.get("strEmailAddr"));
+            paramMap.put("strEmailAddr", strEmailAddr);
             paramMap.put("strCouponNo",  strCouponNo);
             
             objCouponService.insertCoupon(paramMap);
