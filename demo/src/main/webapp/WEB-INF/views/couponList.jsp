@@ -116,7 +116,7 @@ $(document).ready(function() {
                         <c:otherwise>
                             <c:forEach var="row" items="${couponList}" varStatus="status">
                                 <tr>
-                                    <td align="center">${row.strCouponID}</td>
+                                    <td align="center">${row.intCouponID}</td>
                                     <td align="center">${row.strEmailAddr}</td>
                                     <td align="center">${row.strCouponNo}</td>
                                     <td align="center"><fmt:formatDate value="${row.strRegDate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>

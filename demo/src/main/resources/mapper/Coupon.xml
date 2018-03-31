@@ -15,7 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectCouponList" resultType="com.coupon.domain.ResCouponList" parameterType="java.util.HashMap">
         <![CDATA[
 	        -- selectCouponList
-	        SELECT A.CouponID       AS strCouponID
+	        SELECT A.CouponID       AS intCouponID
 	              ,A.CouponNo       AS strCouponNo
 	              ,A.EmailAddr      AS strEmailAddr
 	              ,A.PubYMD         AS strPubYMD
