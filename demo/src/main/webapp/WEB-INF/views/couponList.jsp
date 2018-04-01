@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="application/json; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -6,7 +6,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>CouponList</title>
 <!-- Bootstrap -->
 <link href="/resources/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
@@ -69,10 +68,10 @@ $(document).ready(function() {
 <div class="container">
 <h3>CouponList</h3>
 <div class="panel panel-default">
-    <form class="form-inline" id="frmSearch" action="/coupon/list">
-        <input type="hidden" id="pageNo" name="pageNo" value="">
-        <input type="hidden" id="pageSize" name="pageSize" value="">
-    </form>
+    <!--<form class="form-inline" id="frmSearch" action="/coupon/list">
+        	<input type="hidden" id="pageNo" name="pageNo" value="">
+        	<input type="hidden" id="pageSize" name="pageSize" value="">
+    	</form>-->
 </div>
 <div class="row">
     <div class="col-md-12" style="text-align:left">
@@ -106,25 +105,9 @@ $(document).ready(function() {
                             <th class="text-center">Datetime</th>
                         </tr>
                     </thead>
-                    <tbody>
-                    <c:choose>
-                        <c:when test="${fn:length(couponList) == 0}">
-                            <tr>
-                                <td colspan="4" align="center">조회결과가 없습니다.</td>
-                            </tr>
-                        </c:when>
-                        <c:otherwise>
-                            <c:forEach var="row" items="${couponList}" varStatus="status">
-                                <tr>
-                                    <td align="center">${row.intCouponID}</td>
-                                    <td align="center">${row.strEmailAddr}</td>
-                                    <td align="center">${row.strCouponNo}</td>
-                                    <td align="center"><fmt:formatDate value="${row.strRegDate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-                                </tr>
-                            </c:forEach>
-                        </c:otherwise>
-                    </c:choose>
-                    </tbody>
+<tbody id="list">
+            <!-- 리스트가 출력될 영역 -->
+        </tbody>
                 </table>
             </div>
             <div class="col-md-12" align="center">
@@ -137,26 +120,71 @@ $(document).ready(function() {
 <script src="/resources/bootstrap/js/jquery.twbsPagination.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-
-    var firstPageClick = true;
+	
+	var firstPageClick = true;
     var totalPages     = ${totalPage};    //전체 페이지
-    var pageSize       = 10;              //리스트 개수
-    var pageNo         = ${pageNo};    //현재 페이지
-     
-    $("#pagination").twbsPagination({
-        totalPages  : totalPages,
-        visiblePages: pageSize,
-        startPage   : pageNo,
-        onPageClick: function (event, pageNo) {
-            if(firstPageClick) {
-                   firstPageClick = false;
-                   return;
-            }
-            $('#pageNo').val(pageNo);
-            $('#pageSize').val(pageSize);
-            $("#frmSearch").submit();
+    var pageSize       = ${pageSize};     //리스트 개수
+    var pageNo         = ${pageNo};       //현재 페이지
+    
+    var url;
+    var objListParams  = new Object();
+    
+	listCall(showPage);//페이지에 들어오자마자 실행
+	
+	function listCall(page){
+		url="/coupon/list"
+    	objListParams.pageNo   = pageNo;
+    	objListParams.pageSize = pageSize;
+        ajaxCall(url,objListParams);
+	
+        function ajaxCall(reqUrl, reqData){
+            console.log(reqUrl, reqData);
+            $.ajax({
+                url:reqUrl,
+                type:"get",
+                data:reqData,
+                dataType:"json",
+                success:function(d){                
+                    if(retVal.code == 0){
+                        showPage = d.pageNo; 
+                        listPrint(d.couponList);
+                        $('#pagination').twbsPagination({
+                            startPage: d.pageNo,    //시작 페이지
+                            totalPages: d.totalPage,    //총 페이지 갯수
+                            visiblePages: d.pageSize,    //페이징 처리되어 보여줄 페이지 12345 밑에 그거임
+                            onPageClick: function (event, page) {
+                                console.log(event);
+                                console.log(page);
+                                listCall(page);
+                            }
+                        });
+                    } else {
+                        alert(retVal.message);
+                    }
+                },
+                error : function(request, status, error){
+                	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                }
+            });
         }
-    });
+        
+        //리스트 그리기
+        //listCall이 성공하면 가져온 페이지를 보여준다.
+        //로그인에 성공하여 리스트 페이지에 오면 페이징 처리되어 있지만 1페이지만을 가져온다.
+        
+        function listPrint(list){            
+            var content="";                    
+            for(var i=0; i<list.length; i++){
+                content+="<tr>";
+                content+="<td>"+list[i].bbsno+"</td>";
+                content+="<td>"+list[i].user_id+"</td>";
+                content+="<td>"+list[i].reg_date+"</td>";
+                content+="<td>"+list[i].bHit+"</td>";    
+                content+="</tr>";
+            }                        
+            $("#list").empty();
+            $("#list").append(content);            
+        }
 });
 </script>
 </body>

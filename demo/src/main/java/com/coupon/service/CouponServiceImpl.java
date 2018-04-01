@@ -43,12 +43,25 @@ public class CouponServiceImpl implements CouponService {
     @Override
     public void insertCoupon(Map<String, Object> paramMap) throws Exception {
         
+    	String strCouponNo  = "";
+    	
+    	//쿠폰 번호 생성
+        strCouponNo = objCouponDao.getCouponNo();
+        
+        //쿠폰 번호 공백 체크
+        if(strCouponNo == null || strCouponNo.isEmpty()) {
+            throw new GlobalException("쿠폰 생성 오류가 발생했습니다. 다시 시도해주세요.");
+        }
+        
+        //쿠폰 번호 '-' 문자 연결
+        strCouponNo = strCouponNo.substring(0, 4) + "-" + strCouponNo.substring(4, 8) + "-" + strCouponNo.substring(8, 12) + "-" + strCouponNo.substring(12, 16);
+
         //이메일 중복 체크
         if(objCouponDao.selectDupEmailAddr(paramMap.get("strEmailAddr").toString()) > 0){
             throw new GlobalException("중복된 이메일 주소입니다.");
         }
         //쿠폰 중복 체크
-        if(objCouponDao.selectDupCouponNo(paramMap.get("strCouponNo").toString()) > 0){
+        if(objCouponDao.selectDupCouponNo(strCouponNo) > 0){
             throw new GlobalException("중복된 쿠폰이 생성되었습니다. 다시 시도해주세요.");
         }
         

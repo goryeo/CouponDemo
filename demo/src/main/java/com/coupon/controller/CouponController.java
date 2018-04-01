@@ -29,41 +29,57 @@ public class CouponController {
     private TotalPage objTotalPage;
     
     //1. 쿠폰 리스트 조회
-    @RequestMapping(value = "/coupon/list", method = RequestMethod.GET)
-    public String selectCouponList(@RequestParam Map<String, Object> paramMap, Model model) {
-        
+    @RequestMapping(value = "/coupon/list", method = RequestMethod.POST)
+    @ResponseBody
+    public ModelAndView selectCouponList(@RequestParam Map<String, Object> paramMap) {
+    	
         int    intPageNo   = 1;
         int    intPageSize = 10;
         int    intTotalCnt = 0;
+        int    intResult   = 0;
+        String strErrMsg   = "";
+        
         String strPageNo   = (String) paramMap.get("pageNo");
         String strPageSize = (String) paramMap.get("pageSize");
 
+        //JSON 응답 객체
+        ModelAndView  objMV = new ModelAndView(new MappingJackson2JsonView());
+
         try 
         {
-            if(strPageNo != null && !strPageNo.equals("")){
-                intPageNo = Integer.parseInt(strPageNo);
+            if(strPageNo != null && !strPageNo.isEmpty()){
+                intPageNo = Integer.parseInt(paramMap.get("pageNo").toString());
             }
-            if(strPageSize != null && !strPageSize.equals("")){
-                intPageSize = Integer.parseInt(strPageSize);
+            if(strPageSize != null && !strPageSize.isEmpty()){
+                intPageSize = Integer.parseInt(paramMap.get("pageSize").toString());
             }
 
             intTotalCnt = objCouponService.getCouponCnt();
 
+            //페이지 설정
+            objMV.setViewName("couponList");
             //현재 페이지
-            model.addAttribute("pageNo", intPageNo);
-            //전체 개수
-            model.addAttribute("totalCnt", intTotalCnt);
+            objMV.addObject("pageNo", intPageNo);
+            //페이지 사이즈
+            objMV.addObject("pageSize", intPageSize); 
             //전체 페이지
-            model.addAttribute("totalPage", objTotalPage.getTotalPage(intTotalCnt, intPageSize));
+            objMV.addObject("totalPage", objTotalPage.getTotalPage(intTotalCnt, intPageSize));
             //쿠폰 리스트 호출
-            model.addAttribute("couponList", objCouponService.selectCouponList(intPageNo, intPageSize));
+            objMV.addObject("couponList", objCouponService.selectCouponList(intPageNo, intPageSize));
+            
         }
         catch (Exception objEx) 
         { 
-            objEx.printStackTrace();
+            intResult = 9999;
+            strErrMsg = objEx.getMessage();
+        }
+        finally
+        {
+            objMV.addObject("code",    intResult);
+            objMV.addObject("message", strErrMsg);
         }
 
-        return "couponList";
+        return objMV;
         
     }
 
@@ -75,9 +91,8 @@ public class CouponController {
                                     ,@RequestBody Map<String, Object> paramMap) {
         
         int    intResult    = 0;
-        String strErrMsg    = "쿠폰생성에 성공하였습니다.";
-        String strEmailAddr = null;
-        String strCouponNo  = null;
+        String strErrMsg    = "";
+        String strEmailAddr = "";        
         
         //JSON 응답 객체
         ModelAndView  objMV = new ModelAndView(new MappingJackson2JsonView());
@@ -86,13 +101,18 @@ public class CouponController {
         {         
             //이메일 정보 설정
             strEmailAddr = paramMap.get("strEmailAddr").toString();
-            //쿠폰 번호 생성
-            strCouponNo = objCouponService.getCouponNo();
-            strCouponNo = strCouponNo.substring(0, 4) + "-" + strCouponNo.substring(4, 8) + "-" + strCouponNo.substring(8, 12) + "-" + strCouponNo.substring(12, 16);
             
-            //입력받은 이메일과 생성한 쿠폰 정보 추가
+            //이메일 공백 체크
+            if(strEmailAddr == null || strEmailAddr.isEmpty()) {
+            	intResult = 1001;
+            	strErrMsg = "이메일 값이 존재하지 않습니다.";
+            }
+            else {
+            	strErrMsg = "쿠폰생성에 성공하였습니다.";
+            }
+            
+            //입력받은 이메일 추가
             paramMap.put("strEmailAddr", strEmailAddr);
-            paramMap.put("strCouponNo",  strCouponNo);
             
             objCouponService.insertCoupon(paramMap);
         } 
