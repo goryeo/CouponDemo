@@ -29,7 +29,7 @@ public class CouponController {
     private TotalPage objTotalPage;
     
     //1. 쿠폰 리스트 조회
-    @RequestMapping(value = "/coupon/list", method = RequestMethod.POST)
+    @RequestMapping(value = "/coupon/list", method=RequestMethod.POST)
     @ResponseBody
     public ModelAndView selectCouponList(@RequestParam Map<String, Object> paramMap) {
     	

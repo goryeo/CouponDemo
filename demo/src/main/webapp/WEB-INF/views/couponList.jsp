@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="application/json; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -6,6 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>CouponList</title>
 <!-- Bootstrap -->
 <link href="/resources/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
@@ -129,19 +130,20 @@ $(document).ready(function() {
     var url;
     var objListParams  = new Object();
     
-	listCall(showPage);//페이지에 들어오자마자 실행
+	listCall(1);//페이지에 들어오자마자 실행
 	
 	function listCall(page){
 		url="/coupon/list"
     	objListParams.pageNo   = pageNo;
     	objListParams.pageSize = pageSize;
         ajaxCall(url,objListParams);
+	}
 	
         function ajaxCall(reqUrl, reqData){
             console.log(reqUrl, reqData);
             $.ajax({
                 url:reqUrl,
-                type:"get",
+                type:"post",
                 data:reqData,
                 dataType:"json",
                 success:function(d){                
