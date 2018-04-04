@@ -36,8 +36,8 @@ public class CouponController {
     @RequestMapping(value = "/coupon/list", method=RequestMethod.POST)
     @ResponseBody
     public ModelAndView selectCouponList(HttpServletRequest  objRequest
-							            ,HttpServletResponse objResponse
-							            ,@RequestBody Map<String, Object> paramMap) {
+                                        ,HttpServletResponse objResponse
+                                        ,@RequestBody Map<String, Object> paramMap) {
     	
         int    intPageNo   = 1;
         int    intPageSize = 10;
