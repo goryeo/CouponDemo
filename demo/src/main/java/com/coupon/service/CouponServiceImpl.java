@@ -55,7 +55,10 @@ public class CouponServiceImpl implements CouponService {
         
         //쿠폰 번호 '-' 문자 연결
         strCouponNo = strCouponNo.substring(0, 4) + "-" + strCouponNo.substring(4, 8) + "-" + strCouponNo.substring(8, 12) + "-" + strCouponNo.substring(12, 16);
-
+        
+        //생성된 쿠폰번호 추가
+        paramMap.put("strCouponNo",  strCouponNo);
+        
         //이메일 중복 체크
         if(objCouponDao.selectDupEmailAddr(paramMap.get("strEmailAddr").toString()) > 0){
             throw new GlobalException("중복된 이메일 주소입니다.");
