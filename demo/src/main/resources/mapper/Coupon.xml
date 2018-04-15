@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	                    WHEN A.UseStateCode = 2 THEN '사용완료' 
 	                    ELSE '사용불가' END AS strUseStateCode
 	              ,DATE_FORMAT(A.RegDate,'%Y-%m-%d %H:%i:%s') AS strRegDate
-	              ,DATE_FORMAT(A.UpdDate,'%Y-%m-%d %H:%i:%s') AS strUpdDatetcouponmst
+	              ,DATE_FORMAT(A.UpdDate,'%Y-%m-%d %H:%i:%s') AS strUpdDate
 	        FROM  TCouponMst A
 	        ORDER BY A.RegDate DESC
 	        LIMIT #{start}, #{end}

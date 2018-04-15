@@ -9,5 +9,5 @@ public class ResCouponList {
     private int    intCouponID;
     private String strEmailAddr;
     private String strCouponNo;
-    private Date   strRegDate;
+    private String strRegDate;
 }
