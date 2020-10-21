@@ -60,7 +60,7 @@ public class CouponServiceImpl implements CouponService {
         paramMap.put("strCouponNo",  strCouponNo);
         
         //이메일 중복 체크
-        if(objCouponDao.selectDupEmailAddr(paramMap.get("strEmailAddr").toString()) > 0){
+        if(objCouponDao.selectDupEmailAddr(paramMap.get("strEmailAddr").toString().trim()) > 0){
             throw new GlobalException("중복된 이메일 주소입니다.");
         }
         //쿠폰 중복 체크

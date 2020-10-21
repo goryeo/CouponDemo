@@ -1,7 +1,5 @@
 package com.coupon.domain;
 
-import java.util.Date;
-
 import lombok.Data;
 
 @Data
