@@ -22,9 +22,10 @@ $(document).ready(function() {
 	var firstPageClick = true;
     var objListParams  = new Object();
     var jsonListData   = null;
-	
+    var intPageSize    = 10;
+    
     //리스트 첫 페이지 최초 호출
-    listCall(1, 10);
+    listCall(1, intPageSize);
     
 	function listCall(page, pageSize){
     	objListParams.pageNo   = page;
@@ -117,9 +118,10 @@ $(document).ready(function() {
             success     : function(data){
                 if(data.code == 0) {
                     alert(data.message);
-                    listCall(1, 10);
+                    listCall(1, intPageSize);
                     $("#email").val("");
                     $("#email").focus();
+                    $('#pagination').twbsPagination('destroy');
                 } else {
                     alert(data.message);
                 }
