@@ -73,7 +73,7 @@ $(document).ready(function() {
     function listPrint(list){            
         var content="";                    
         for(var i=0; i<list.length; i++){
-            content += "<tr>";
+            content += "<tr class=text-center>";
             content += "<td>" + list[i].intCouponID  + "</td>";
             content += "<td>" + list[i].strEmailAddr + "</td>";
             content += "<td>" + list[i].strCouponNo  + "</td>";
