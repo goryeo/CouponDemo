@@ -33,5 +33,4 @@ public class CouponApplication {
     public SqlSessionTemplate sqlSession(SqlSessionFactory factory) {
         return new SqlSessionTemplate(factory);
     }
-
 }

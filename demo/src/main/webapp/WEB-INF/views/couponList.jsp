@@ -36,7 +36,7 @@ $(document).ready(function() {
 	
 	function ajaxCall(objJsonParams){
 	    $.ajax({
-	        url 	    : "/coupon/list",
+	        url 	    : "/api/coupon/list",
 	        type        : "post",
 	        contentType : "application/json",
 	        data        : objJsonParams,
@@ -110,7 +110,7 @@ $(document).ready(function() {
         
         //쿠폰 생성
         $.ajax({
-            url         : "/coupon/create",
+            url         : "/api/coupon/create",
             type        : "post",
             contentType : "application/json",
             dataType    : "json",

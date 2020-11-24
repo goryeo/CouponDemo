@@ -70,10 +70,4 @@ public class CouponServiceImpl implements CouponService {
         
         objCouponDao.insertCoupon(paramMap);
     }
-
-    //4. 랜덤 쿠폰 번호 생성
-    @Override
-    public String getCouponNo() throws Exception {
-        return objCouponDao.getCouponNo();
-    }
 }

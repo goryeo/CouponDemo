@@ -15,7 +15,4 @@ public interface CouponService {
 
     //3. 쿠폰 생성
     public void insertCoupon(Map<String, Object> paramMap) throws Exception;
-    
-    //4. 랜덤 쿠폰 번호 생성
-    public String getCouponNo() throws Exception;
 }
