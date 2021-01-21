@@ -20,8 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import com.coupon.service.CouponService;
-import com.coupon.util.TotalPage;
-import com.sun.tools.sjavac.Log;;
+import com.coupon.util.TotalPage;;
 
 @RestController
 @RequestMapping("/api")
